@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test Interface for AIAAIC</title>
+    <style type="text/css">
+        body {
+          /*max-width: 800px;*/
+          margin: auto;
+          padding: 2px;
+          padding-left: 50px;
+        }
+        fieldset {
+          width: 400px;
+          margin-bottom: 20px;
+        }
+        label {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        input, textarea, select {
+            width: 100%;
+        }
+        legend {
+          background-color: #000;
+          color: #fff;
+          padding: 3px 6px;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 500px 500px 500px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Interface for AIAAIC</h1>
+    <form>
+        <fieldset>
+            <legend>Incident Information</legend>
+            
+            <label>Incident Title</label>
+            <input id="input-incident-title" type="text" name="input-incident-title">
+            
+            <label>Incident Description</label>
+            <textarea id="input-incident-desc" type="text" name="input-incident-desc"></textarea>
+            
+            <label>Date Occured</label>
+            <input type="date" name="datetime" id="datetime" />
+            
+            <label>Sector(s) the incident occured in</label>
+            <select id="select-incident-sector" multiple=true>
+                <option>Education</option>
+                <option>Health</option>
+                <option>Public Service</option>
+            </select>
+            
+            <label>Location(s) incident occured in</label>
+            <select id="select-incident-location" multiple=true>
+                <option>Naria</option>
+                <option>Asgard</option>
+                <option>Mordor</option>
+            </select>
+
+            <label>News Trigger</label>
+            <input type="url" name="incident-news-trigger">
+        </fieldset>
+        <fieldset>
+            <fieldset>
+                <legend>System/Resource Involved</legend>
+                
+                <label>System or Resource involved in incident</label>
+                <select id="select-system">
+                    <option value="">--select--</option>
+                    <option>ChatGPT v4</option>
+                    <option>Alexa</option>
+                    <option>Siri</option>
+                    <option>Tesla Autopilot</option>
+                </select>
+                
+                <label>Purpose of System or Resource in incident</label>
+                <select id="select-system-purpose">
+                    <option value="">--select--</option>
+                    <option>Content Generation</option>
+                    <option>Admission of Individuals</option>
+                    <option>Evaluating Human Performance</option>
+                </select>
+                
+                <label>Deployer of System or Resource</label>
+                <input id="select-system-deployer">
+
+                <label>Operator of System or Resource</label>
+                <input id="select-system-operator">
+
+                <label>Stage of System or Resource</label>
+                <select id="select-system-stage">
+                    <option value="">--select--</option>
+                    <option>Development</option>
+                    <option>Deployment</option>
+                    <option>Actual</option>
+                </select>
+            </fieldset>
+
+            <fieldset>
+                <legend>System/Resource Information</legend>
+
+                <label>Name</label>
+                <input id="system-name">
+
+                <label>Developer</label>
+                <input id="system-developer">
+            </fieldset>
+        </fieldset>
+
+        <fieldset>
+            <fieldset>
+                <legend>Incident Cause</legend>
+                <label>Select Cause Category</label>
+                <select id="select-cause">
+                    <option value="">--select--</option>
+                </select>
+
+                <label>Select Cause
+                    <br/><small>select cause based on category</small>
+                </label>
+                <select id="select-cause-l2">
+                    <option value="">--select--</option>
+                </select>
+
+                <p id="cause-desc"></p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Incident Potential Risk</legend>
+                <label>Select Risk Category</label>
+                <select id="select-risk">
+                    <option value="">--select--</option>
+                </select>
+
+                <label>Select Risk
+                    <br/><small>select risk based on category</small>
+                </label>
+                <select id="select-risk-l2">
+                    <option value="">--select--</option>
+                </select>
+
+                <label>Risk to Audience/Entity
+                    <br/><small>who is affected by this risk?</small>
+                </label>
+                <select id="select-risk-entity">
+                    <option value="">--select--</option>
+                    <option value="Users">Users</option>
+                    <option value="Public">Public</option>
+                    <option value="Operator">Operator</option>
+                    <option value="Deployer">Deployer</option>
+                </select>
+
+                <p id="risk-desc"></p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Incident Actual Impact</legend>
+                <label>Select Impact Category</label>
+                <select id="select-impact">
+                    <option value="">--select--</option>
+                </select>
+
+                <label>Select Impact
+                    <br/><small>select impact based on category</small>
+                </label>
+                <select id="select-impact-l2">
+                    <option value="">--select--</option>
+                </select>
+
+                <label>Affected Audience/Entity
+                    <br/><small>who is affected by this impact?</small>
+                </label>
+                <select id="select-impact-entity">
+                    <option value="">--select--</option>
+                    <option value="Users">Users</option>
+                    <option value="Public">Public</option>
+                    <option value="Operator">Operator</option>
+                    <option value="Deployer">Deployer</option>
+                </select>
+
+                <p id="impact-desc"></p>
+            </fieldset>
+        </fieldset>
+    </form>
+<script type="text/javascript">
+    var taxonomy = {
+        "Technical": [
+            "Technical Accuracy",
+            "Technical Automation",
+            "Technical Bias",
+            "Technical Effectiveness",
+            "Technical Explainability",
+            "Technical Human involvement",
+            "Technical Malfunction",
+            "Technical Privacy",
+            "Technical Security",
+            "Technical Transparency",
+            "Technical Robustness"
+        ],
+        "Operational": [
+            "Accountability/contestability",
+            "Auditing",
+            "Algorithmic bias",
+            "Confidentiality",
+            "Copyright violation",
+            "Data Security",
+            "Expertise and employment (lack of skills) ",
+            "Liability",
+            "Market abuse (Competition/Collusion)",
+            "Misuse",
+            "Oversight and controllability",
+            "Reputation",
+            "Resilience",
+            "Risk Management"
+        ],
+        "Legal": [
+            "Competition/collusion",
+            "Confidentiality",
+            "Consumer protection",
+            "Contractual ",
+            "Data privacy",
+            "Defamation/libel/slander",
+            "Discrimination",
+            "Identity theft/impersonation",
+            "IP/copyright",
+            "Fraud",
+            "Legal rights and freedoms",
+            "Necessity/proportionality",
+            "Personality rights"
+        ],
+        "Social": [
+            "Accountability",
+            "Comprehensibility",
+            "Mis/disinformation",
+            "Discrimination",
+            "Diversity",
+            "Employment",
+            "Norms / Ethics / Morality",
+            "Privacy",
+            "Public Safety & Security",
+            "Self Identity",
+            "Surveillance",
+            "Transparency",
+            "Weaponisation",
+            "National Security",
+            "Sustainability (ESG)"
+        ],
+        "Political": [
+            "Political instability",
+            "Electoral interference",
+            "Public information degradation",
+            "Government service delivery",
+            "Institutional trust loss",
+            "Political microtargeting",
+            "National security threat",
+            "Civil liberties erosion",
+        ],
+        "Economic": [
+            "Economic instability",
+            "Economic inequality",
+            "Economic concentration",
+            "Economic displacement/jobs loss",
+            "Economic growth",
+            "Financial loss",
+            "Financial risk",
+            "Financial instability"
+        ],
+        "Environmental": [
+            "Air pollution",
+            "Carbon emissions",
+            "Ecological/biodiversity damage",
+            "Energy shortage(s)",
+            "Natural resources extraction",
+            "Electronic waste",
+            "Excessive landfill",
+            "Ground pollution",
+            "Noise pollution",
+            "Water consumption",
+            "Water pollution",
+            "Water shortage(s)"
+        ]
+    };
+    const loadSelect = function(select_id) {
+        var select = document.getElementById('select-' + select_id);
+        for(let concept in taxonomy) {
+            var opt = document.createElement("option");
+            opt.value = concept;
+            opt.innerHTML = concept;
+            select.append(opt);
+        }
+        select.addEventListener('change',function(){
+            var select = document.getElementById('select-' + select_id).value;
+            console.log(select);
+            console.log(taxonomy[select]);
+            var select2 = document.getElementById('select-' + select_id + '-l2');
+            select2.options.length = 0;
+            var opt = document.createElement("option");
+            opt.innerHTML = "--select--";
+            select2.append(opt);
+            for(const concept of taxonomy[select]) {
+                var opt = document.createElement("option");
+                opt.value = concept;
+                opt.innerHTML = concept;
+                select2.append(opt);
+            }
+        });
+        var select2 = document.getElementById('select-' + select_id + '-l2');
+        select2.addEventListener('change',function(){
+            var cause2value = document.getElementById('select-' + select_id + '-l2').value;
+            actions[select_id]();
+        });
+    };
+    const describeCause = function() {
+        var desc = document.getElementById('cause-desc');
+        desc.innerHTML = "This incident was caused due to an issue with: " + document.getElementById('select-cause-l2').value ;
+    }
+    const describeRisk = function() { 
+        var desc = document.getElementById('risk-desc');
+        desc.innerHTML = "This incident has a potential risk regarding: " + document.getElementById('select-risk-l2').value ;
+    }
+    const describeImpact = function() {
+        var desc = document.getElementById('impact-desc');
+        desc.innerHTML = "This incident has an actual impact regarding: " + document.getElementById('select-impact-l2').value ;
+    }
+    const actions = {
+        "cause": describeCause,
+        "risk": describeRisk,
+        "impact": describeImpact
+    };
+document.addEventListener("DOMContentLoaded", function(){
+    loadSelect('cause');
+    loadSelect('risk');
+    loadSelect('impact');
+    var entity = document.getElementById('select-risk-entity');
+    entity.addEventListener('change',function(){
+        var entity = document.getElementById('select-risk-entity');
+        if (entity.value) {
+            entity = " that can potentially affect " + entity.value;
+        } else {
+            entity = "";
+        }
+        var desc = document.getElementById('risk-desc');
+        desc.innerHTML = "This incident has a potential risk regarding: " + document.getElementById('select-risk-l2').value + entity ;
+    });  
+    var entity = document.getElementById('select-impact-entity');
+    entity.addEventListener('change',function(){
+        var entity = document.getElementById('select-impact-entity');
+        if (entity.value) {
+            entity = " that has an actual effect on " + entity.value;
+        } else {
+            entity = "";
+        }
+        var desc = document.getElementById('impact-desc');
+        desc.innerHTML = "This incident has an actual impact regarding regarding: " + document.getElementById('select-impact-l2').value + entity ;
+    });  
+});
+</script>
+</body>
+</html>
